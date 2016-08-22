@@ -1,0 +1,13 @@
+Wizard that has to brew to fend off monsters, summon monsters
+
+skilltree
+    alchemy
+    spells
+        summon
+            helper
+            fighter
+            golem, etc
+        fight
+        help
+enemies
+    timberwolf

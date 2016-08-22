@@ -1,0 +1,57 @@
+<app>
+    <div style="position: absolute; left: 50%; top: 50%">
+        <div class="world" style="left: {0-player.position.x*16}; top: {0-player.position.y*16}">
+            <div class="chunk" style="left: {chunk.position.x*16*16}px; top: {chunk.position.y*16*16}px"
+            each={chunk in world.loadedChunks}>
+                <div each={tiles, y in chunk.tiles}>
+                    <div class="tile {tile.material.name}" each={tile, x in tiles}
+                    style="left: {x*16}px; top: {y*16}px">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="position: absolute; background: white;">
+        {player.position.x} -
+        {player.position.y}
+    </div>
+    <br>
+
+    <script>
+        import Player from '../engine/entity/player'
+        import World from '../engine/world/world'
+        import Chunk from '../engine/world/chunk'
+
+
+
+        this.player = new Player
+        this.world = new World
+
+        this.player.on('moved', (event) => {
+            this.world.loadChunks(event.position.x, event.position.y)
+            this.update()
+        })
+
+        this.handleKeyPress = (event) => {
+            switch (event.key) {
+                case 'ArrowRight':
+                    this.player.walk('right')
+                    break;
+                case 'ArrowLeft':
+                    this.player.walk('left')
+                    break;
+                case 'ArrowUp':
+                    this.player.walk('up')
+                    break;
+                case 'ArrowDown':
+                    this.player.walk('down')
+                    break;
+            }
+            this.update()
+        }
+
+        this.on('mount', () => {
+            document.addEventListener('keydown', this.handleKeyPress)
+        })
+
+    </script>
+</app>
