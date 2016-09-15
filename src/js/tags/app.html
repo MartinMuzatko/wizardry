@@ -1,5 +1,5 @@
 <app>
-    <div style="position: absolute; left: 50%; top: 50%">
+    <div style="display: none; position: absolute; left: 50%; top: 50%">
         <div class="world" style="left: {0-player.position.x*16}; top: {0-player.position.y*16}">
             <div class="chunk" style="left: {chunk.position.x*16*16}px; top: {chunk.position.y*16*16}px"
             each={chunk in world.loadedChunks}>
@@ -21,10 +21,8 @@
         import World from '../engine/world/world'
         import Chunk from '../engine/world/chunk'
 
-
-
-        this.player = new Player
         this.world = new World
+        this.player = this.world.players[0]
 
         this.player.on('moved', (event) => {
             this.world.loadChunks(event.position.x, event.position.y)

@@ -6,9 +6,10 @@ export const CHUNKSIZE = 16
 export default class World {
     constructor(seed = Math.random()*(1024*1024*16) | 0) {
         this.seed = parseInt(seed)
-        this.chunks = [new Chunk(0,0),new Chunk(1,1),new Chunk(0,1),new Chunk(1,0)]
+        this.chunks = []
         this.loadedChunks = []
-        this.updateChunks()
+        this.loadChunks()
+        this.players = [new Player()]
     }
 
     extend(x,y) {
@@ -26,7 +27,7 @@ export default class World {
     }
 
     // x,y = player pos
-    loadChunks(x,y) {
+    loadChunks(x=0,y=0) {
         let chunkX = parseInt(x/16)
         let chunkY = parseInt(y/16)
         this.updateChunks(chunkX,chunkY)
@@ -35,19 +36,20 @@ export default class World {
 
     updateChunks(x,y) {
         this.extend(x,y)
+        this.extend(x,y+1)
         this.extend(x+1,y)
-        this.extend(x-1,y)
-        this.extend(x,y-1)
-        this.extend(x,y-1)
         this.extend(x+1,y+1)
-        this.extend(x+1,y-1)
+        this.extend(x,y-1)
+        this.extend(x-1,y)
+        this.extend(x-1,y-1)
         this.extend(x-1,y+1)
+        this.extend(x+1,y-1)
 
         this.loadedChunks = this.chunks.filter((chunk) => {
             let validChunk = !!~[x-1,x,x+1].indexOf(chunk.position.x) ||
                 !!~[y-1,y,y+1].indexOf(chunk.position.y)
-            console.log(validChunk, x, y)
             return validChunk
         })
+        console.log('loaded total: '+this.loadedChunks.length);
     }
 }
