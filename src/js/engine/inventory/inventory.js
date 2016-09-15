@@ -16,9 +16,9 @@ export default class Inventory {
     }
 
     put(item, amount) {
-        let nextFreeSlot = this.findNextFreeSlot(item, amount)
+        let nextFreeSlot = this.findNextFreeSlot(amount, item)
         if (nextFreeSlot) {
-            if (nextFreeSlot.doesItemFit(amount) || nextFreeSlot.item.name == NONE.name) {
+            if (nextFreeSlot.doesItemFit(amount, item)) {
                 nextFreeSlot.add(amount, item)
             } else {
                 let spaceLeft = nextFreeSlot.item.stackMaxSize - nextFreeSlot.amount
@@ -29,11 +29,11 @@ export default class Inventory {
         // handle overflow
     }
 
-    findNextFreeSlot(item, amount) {
+    findNextFreeSlot(amount, item) {
         let freeSlots = this.slots
         if (item) {
             freeSlots = this.slots.filter(slot => {
-                return slot.item.name == item.name && slot.doesItemFit(amount)
+                return slot.item.name == item.name && item.amount != item.stackMaxSize
             })
         }
         if (!freeSlots.length) {

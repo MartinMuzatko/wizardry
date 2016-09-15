@@ -16,8 +16,12 @@ export default class Slot {
         this.amount += parseInt(amount)
     }
 
-    doesItemFit(amount) {
-        if (this.amount + amount <= this.item.stackMaxSize) {
+    doesItemFit(amount, item) {
+        if (this.item.name == NONE.name) {
+            if (this.amount + amount <= item.stackMaxSize) {
+                return true
+            }
+        } else if (this.amount + amount <= item.stackMaxSize) {
             return true
         }
     }
