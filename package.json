@@ -46,8 +46,8 @@
     "riotjs-loader": "^3.0.0",
     "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.1"
   },
   "dependencies": {
     "animate.css": "^3.5.1",
